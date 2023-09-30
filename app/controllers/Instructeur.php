@@ -119,17 +119,21 @@ class Instructeur extends BaseController
                         $this->view('Instructeur/update',$data);
                 }
 
-                public function delete($voertuigid,$InstructeurId)
+                public function delete($voertuigid, $InstructeurId)
                 {
+                    if ($voertuigid) {
+                        $delete = $this->InstructeurModel->delete($voertuigid);
+                        // Gebruik header() om door te verwijzen naar de gebruiktevoertuigen-pagina
+                        header("Location: /Instructeur/gebruiktevoertuigen/$InstructeurId");
+                        exit(); // Zorg ervoor dat het script stopt na het doorverwijzen
+                    }
+                
                     var_dump($InstructeurId);
                     var_dump($voertuigid);
-                    $delete = $this->InstructeurModel->delete($voertuigid);
-                   
-                 
+                
                     $this->view('Instructeur/delete');
-            }
-
-
+                }
+                
 
                 public function toevoegenvoertuig($InstructeurId)
                 {
